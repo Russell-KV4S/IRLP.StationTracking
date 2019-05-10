@@ -2,7 +2,7 @@
 https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/1.0/IRLP.StationTracking.zip
 
 # IRLP.StationTracking
-IRLP.StationTracking gives you ability to get email notificaiton about status changes of your Favorite IRLP stations.
+IRLP.StationTracking gives you ability to get email notificaitons about status changes of your Favorite IRLP stations.
 The program reads data from this site: http://status.irlp.net/index.php?PSTART=9
 
 Once you download, edit the .config file that's along side the executable as needed (you won't need to copy the config on future releases unless there is a structure change). 
