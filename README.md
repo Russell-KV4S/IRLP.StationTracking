@@ -7,6 +7,8 @@ The program reads data from this site: http://status.irlp.net/index.php?PSTART=9
 
 Contact me if you have feature request or use Git and create your enhancements and merge them back in.
 
+I recommend using Windows Task Scheduler to kick the program off on about a 5-10 minute interval.
+
 Once you download, edit the .config file that's along side the executable as needed (you won't need to copy the config on future releases unless there is a structure change). 
 There are comments in the file that tells you how to format the entries. Here is the example file:
 ```
