@@ -8,7 +8,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRLP.StationTracking
+namespace KV4S.AmateurRadio.IRLP.StationTracking
 {
     class Program
     {

@@ -7,7 +7,7 @@
     <ProjectGuid>{19F05E41-7AE3-4002-A5D1-566F162C9CE7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IRLP.StationTracking</RootNamespace>
+    <RootNamespace>KV4S.AmateurRadio.IRLP.StationTracking</RootNamespace>
     <AssemblyName>IRLP.StationTracking</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
