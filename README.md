@@ -25,13 +25,14 @@ There are comments in the file that tells you how to format the entries. Here is
         <add key="StatusEmails" value="Y"/>
       
       <!--Email Parameters - Gmail example-->
-      <dd key="EmailFrom" value="example@gmail.com"/>
+      <!--use commas with no spaces to add more emails to the email To and From field-->
+      <add key="EmailTo" value="example@gmail.com"/>
+      <add key="EmailFrom" value="example@gmail.com"/>
       <add key="SMTPHost" value="smtp.gmail.com"/>
       <add key="SMTPPort" value="587"/>
       <add key="SMTPUser" value="example@gmail.com"/>
       <add key="SMTPPassword" value="Password"/>
     </appSettings>
 </configuration>
-```!--use commas with no spaces to add more emails to the email To and From field-->
-      <add key="EmailTo" value="example@gmail.com"/>
-      <a
+
+```
