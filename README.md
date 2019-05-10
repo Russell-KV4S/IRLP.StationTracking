@@ -1,4 +1,4 @@
-# Current Version
+# Current Version 1.0
 https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/1.0/IRLP.StationTracking.zip
 
 # IRLP.StationTracking
