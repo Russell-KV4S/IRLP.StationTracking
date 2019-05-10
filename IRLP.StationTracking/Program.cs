@@ -90,21 +90,37 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
 
                         if (File.Exists(callsign + ".txt"))
                         {
+                            bool updated = false;
                             using (StreamReader sr = File.OpenText(callsign + ".txt"))
                             {
                                 String s = "";
+                                
                                 while ((s = sr.ReadLine()) != null)
                                 {
                                     if (status != s)
                                     {
                                         Console.WriteLine("Station " + callsign + " has changed to " + status);
-                                        Email(callsign, status);
+                                        updated = true;
+                                        if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
+                                        {
+                                            Email(callsign, status);
+                                        }
                                     }
                                     else
                                     {
                                         Console.WriteLine("Station " + callsign + " has not changed. Still " + status);
                                     }
                                 }
+                            }
+                            if (updated)
+                            {
+                                File.Delete(callsign + ".txt");
+                                FileStream fs = null;
+                                fs = new FileStream(callsign + ".txt", FileMode.Append);
+                                StreamWriter log = new StreamWriter(fs);
+                                log.WriteLine(status);
+                                log.Close();
+                                fs.Close();
                             }
                         }
                         else
