@@ -2,7 +2,7 @@
 https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/1.0/IRLP.StationTracking.zip
 
 # IRLP.StationTracking
-IRLP.StationTracking gives you ability to get email notificaitons about status changes of your Favorite IRLP stations.
+IRLP.StationTracking gives you ability to get email notifications about status changes of your Favorite IRLP stations.
 The program reads data from this site: http://status.irlp.net/index.php?PSTART=9
 
 Contact me if you have feature request or use Git and create your enhancements and merge them back in.
@@ -25,13 +25,13 @@ There are comments in the file that tells you how to format the entries. Here is
         <add key="StatusEmails" value="Y"/>
       
       <!--Email Parameters - Gmail example-->
-      <!--use commas with no spaces to add more emails to the email To and From field-->
-      <add key="EmailTo" value="example@gmail.com"/>
-      <add key="EmailFrom" value="example@gmail.com"/>
+      <dd key="EmailFrom" value="example@gmail.com"/>
       <add key="SMTPHost" value="smtp.gmail.com"/>
       <add key="SMTPPort" value="587"/>
       <add key="SMTPUser" value="example@gmail.com"/>
       <add key="SMTPPassword" value="Password"/>
     </appSettings>
 </configuration>
-```
+```!--use commas with no spaces to add more emails to the email To and From field-->
+      <add key="EmailTo" value="example@gmail.com"/>
+      <a
