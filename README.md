@@ -5,7 +5,7 @@ https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/1.0/IRLP.
 IRLP.StationTracking gives you ability to get email notificaiton about status changes of your Favorite IRLP stations.
 The program reads data from this site: http://status.irlp.net/index.php?PSTART=9
 
-'''
+```
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
     <startup> 
@@ -30,4 +30,4 @@ The program reads data from this site: http://status.irlp.net/index.php?PSTART=9
       <add key="SMTPPassword" value="Password"/>
     </appSettings>
 </configuration>
-'''
+```
