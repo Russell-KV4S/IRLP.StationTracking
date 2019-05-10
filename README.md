@@ -5,6 +5,8 @@ https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/1.0/IRLP.
 IRLP.StationTracking gives you ability to get email notificaiton about status changes of your Favorite IRLP stations.
 The program reads data from this site: http://status.irlp.net/index.php?PSTART=9
 
+Once you download, edit the .config file that's along side the executable as needed (you won't need to copy the config on future releases unless there is a structure change). 
+There are comments in the file that tells you how to format the entries. Here is the example file:
 ```
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
