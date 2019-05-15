@@ -1,7 +1,5 @@
-# Current Version 1.0
-Version updated 5/15/2019
-
-https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/1.0/IRLP.StationTracking.zip
+# Current Version 1.1
+https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/v1.1/IRLP.StationTracking.zip
 
 # IRLP.StationTracking
 IRLP.StationTracking gives you ability to get email notifications about status changes of your favorite IRLP stations.
@@ -40,3 +38,4 @@ There are comments in the file that tells you how to format the entries. Here is
 </configuration>
 
 ```
+Errors will be logged to an ErrorLog.txt 
