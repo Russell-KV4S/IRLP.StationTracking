@@ -131,9 +131,9 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                             log.WriteLine(status);
                             log.Close();
                             fs.Close();
+                            Console.WriteLine("Station " + callsign + " is now being tracked on the IRLP website. Current status " + status);
                             if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
                             {
-                                Console.WriteLine("Station " + callsign + " is now being tracked on the IRLP website. Current status " + status);
                                 Email(callsign, status);
                             }
                         }
@@ -144,6 +144,7 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
             {
                 Console.WriteLine("Program encountered and error:");
                 Console.WriteLine(ex.Message);
+                LogError(ex.Message, ex.Source);
                 if (ConfigurationManager.AppSettings["EmailError"] == "Y")
                 {
                     EmailError(ex.Message, ex.Source);
@@ -185,7 +186,6 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
             }
             catch (Exception ex)
             {
-                LogError(Message, Source);
                 Console.WriteLine("Program encountered and an error sending email:");
                 Console.WriteLine(ex.Message);
                 LogError(ex.Message, ex.Source);
