@@ -133,7 +133,7 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                             fs.Close();
                             if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
                             {
-                                Console.WriteLine("Station " + callsign + " is not listed on the IRLP website");
+                                Console.WriteLine("Station " + callsign + " is now being tracked on the IRLP website. Current status " + status);
                                 Email(callsign, status);
                             }
                         }
@@ -185,8 +185,10 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Program encountered and error sending email:");
+                LogError(Message, Source);
+                Console.WriteLine("Program encountered and an error sending email:");
                 Console.WriteLine(ex.Message);
+                LogError(ex.Message, ex.Source);
             }
         }
 
@@ -216,8 +218,27 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Program encountered and error sending email:");
+                Console.WriteLine("Error sending email:");
                 Console.WriteLine(ex.Message);
+                LogError(ex.Message, ex.Source);
+            }
+        }
+
+        private static void LogError(string Message, string source)
+        {
+            try
+            {
+                FileStream fs = null;
+                fs = new FileStream("ErrorLog.txt", FileMode.Append);
+                StreamWriter log = new StreamWriter(fs);
+                log.WriteLine(DateTime.Now + " Error: " + Message + " Source: " + source);
+                log.Close();
+                fs.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error logging previous error.");
+                Console.WriteLine("Make sure the Error log is not open.");
             }
         }
     }
