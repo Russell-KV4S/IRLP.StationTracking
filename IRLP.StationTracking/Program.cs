@@ -114,27 +114,33 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                             }
                             if (updated)
                             {
-                                File.Delete(callsign + ".txt");
+                                if (!status.Contains("<td"))
+                                {
+                                    File.Delete(callsign + ".txt");
+                                    FileStream fs = null;
+                                    fs = new FileStream(callsign + ".txt", FileMode.Append);
+                                    StreamWriter log = new StreamWriter(fs);
+                                    log.WriteLine(status);
+                                    log.Close();
+                                    fs.Close();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!status.Contains("<td"))
+                            {
                                 FileStream fs = null;
                                 fs = new FileStream(callsign + ".txt", FileMode.Append);
                                 StreamWriter log = new StreamWriter(fs);
                                 log.WriteLine(status);
                                 log.Close();
                                 fs.Close();
-                            }
-                        }
-                        else
-                        {
-                            FileStream fs = null;
-                            fs = new FileStream(callsign + ".txt", FileMode.Append);
-                            StreamWriter log = new StreamWriter(fs);
-                            log.WriteLine(status);
-                            log.Close();
-                            fs.Close();
-                            Console.WriteLine("Station " + callsign + " is now being tracked on the IRLP website. Current status " + status);
-                            if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
-                            {
-                                Email(callsign, status);
+                                Console.WriteLine("Station " + callsign + " is now being tracked on the IRLP website. Current status " + status);
+                                if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
+                                {
+                                    Email(callsign, status);
+                                }
                             }
                         }
                     }
