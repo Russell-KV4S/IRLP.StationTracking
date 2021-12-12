@@ -97,18 +97,21 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                                 
                                 while ((s = sr.ReadLine()) != null)
                                 {
-                                    if (status != s)
+                                    if (!status.Contains("<td"))
                                     {
-                                        Console.WriteLine("Station " + callsign + " has changed to " + status);
-                                        updated = true;
-                                        if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
+                                        if (status != s)
                                         {
-                                            Email(callsign, status);
+                                            Console.WriteLine("Station " + callsign + " has changed to " + status);
+                                            updated = true;
+                                            if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
+                                            {
+                                                Email(callsign, status);
+                                            }
                                         }
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Station " + callsign + " has not changed. Still " + status);
+                                        else
+                                        {
+                                            Console.WriteLine("Station " + callsign + " has not changed. Still " + status);
+                                        }
                                     }
                                 }
                             }
