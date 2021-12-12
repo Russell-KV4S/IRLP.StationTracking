@@ -61,88 +61,91 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     var irlpHTML = wc.DownloadString(URL);
 
-                    CallsignListString = ConfigurationManager.AppSettings["Callsigns"].ToUpper();
-                    foreach (string callsign in _callsignList)
+                    if (irlpHTML.Contains("9050")) //seeing if the html includes the largest reflector. sometimes the data isn't loaded when the html is loaded.
                     {
-                        Console.WriteLine("Checking station " + callsign);
-                        //callsign split
-                        string[] strCallsignSplit = new string[] { callsign };
-                        string[] strRowSplit = irlpHTML.Split(strCallsignSplit, StringSplitOptions.RemoveEmptyEntries);
-
-                        //status end split
-                        int intSplitIndex = strRowSplit.Count() - 1;
-                        string[] strRowEndSplit = new string[] { "</td></tr>" };
-                        string[] strStatusendSplit = strRowSplit[intSplitIndex].Split(strRowEndSplit, StringSplitOptions.RemoveEmptyEntries);
-
-                        //status begin split
-                        string[] strHtmlSplit = new string[] { "<td>" };
-                        string[] strStatusSplit = strStatusendSplit[0].Split(strHtmlSplit, StringSplitOptions.RemoveEmptyEntries);
-
-                        //status
-                        intSplitIndex = strStatusSplit.Count() - 1;
-                        string status = strStatusSplit[intSplitIndex];
-
-                        if (status == "Status")
+                        CallsignListString = ConfigurationManager.AppSettings["Callsigns"].ToUpper();
+                        foreach (string callsign in _callsignList)
                         {
-                            Console.WriteLine("Station " + callsign + " is not listed on the IRLP website for tracking.");
-                            continue;
-                        }
+                            Console.WriteLine("Checking station " + callsign);
+                            //callsign split
+                            string[] strCallsignSplit = new string[] { callsign };
+                            string[] strRowSplit = irlpHTML.Split(strCallsignSplit, StringSplitOptions.RemoveEmptyEntries);
 
-                        if (File.Exists(callsign + ".txt"))
-                        {
-                            bool updated = false;
-                            using (StreamReader sr = File.OpenText(callsign + ".txt"))
+                            //status end split
+                            int intSplitIndex = strRowSplit.Count() - 1;
+                            string[] strRowEndSplit = new string[] { "</td></tr>" };
+                            string[] strStatusendSplit = strRowSplit[intSplitIndex].Split(strRowEndSplit, StringSplitOptions.RemoveEmptyEntries);
+
+                            //status begin split
+                            string[] strHtmlSplit = new string[] { "<td>" };
+                            string[] strStatusSplit = strStatusendSplit[0].Split(strHtmlSplit, StringSplitOptions.RemoveEmptyEntries);
+
+                            //status
+                            intSplitIndex = strStatusSplit.Count() - 1;
+                            string status = strStatusSplit[intSplitIndex];
+
+                            if (status == "Status")
                             {
-                                String s = "";
-                                
-                                while ((s = sr.ReadLine()) != null)
+                                Console.WriteLine("Station " + callsign + " is not listed on the IRLP website for tracking.");
+                                continue;
+                            }
+
+                            if (File.Exists(callsign + ".txt"))
+                            {
+                                bool updated = false;
+                                using (StreamReader sr = File.OpenText(callsign + ".txt"))
                                 {
-                                    if (!status.Contains("<td"))
+                                    String s = "";
+
+                                    while ((s = sr.ReadLine()) != null)
                                     {
-                                        if (status != s)
+                                        if (!status.Contains("<td"))
                                         {
-                                            Console.WriteLine("Station " + callsign + " has changed to " + status);
-                                            updated = true;
-                                            if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
+                                            if (status != s)
                                             {
-                                                Email(callsign, status);
+                                                Console.WriteLine("Station " + callsign + " has changed to " + status);
+                                                updated = true;
+                                                if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
+                                                {
+                                                    Email(callsign, status);
+                                                }
                                             }
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Station " + callsign + " has not changed. Still " + status);
+                                            else
+                                            {
+                                                Console.WriteLine("Station " + callsign + " has not changed. Still " + status);
+                                            }
                                         }
                                     }
                                 }
+                                if (updated)
+                                {
+                                    if (!status.Contains("<td"))
+                                    {
+                                        File.Delete(callsign + ".txt");
+                                        FileStream fs = null;
+                                        fs = new FileStream(callsign + ".txt", FileMode.Append);
+                                        StreamWriter log = new StreamWriter(fs);
+                                        log.WriteLine(status);
+                                        log.Close();
+                                        fs.Close();
+                                    }
+                                }
                             }
-                            if (updated)
+                            else
                             {
                                 if (!status.Contains("<td"))
                                 {
-                                    File.Delete(callsign + ".txt");
                                     FileStream fs = null;
                                     fs = new FileStream(callsign + ".txt", FileMode.Append);
                                     StreamWriter log = new StreamWriter(fs);
                                     log.WriteLine(status);
                                     log.Close();
                                     fs.Close();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (!status.Contains("<td"))
-                            {
-                                FileStream fs = null;
-                                fs = new FileStream(callsign + ".txt", FileMode.Append);
-                                StreamWriter log = new StreamWriter(fs);
-                                log.WriteLine(status);
-                                log.Close();
-                                fs.Close();
-                                Console.WriteLine("Station " + callsign + " is now being tracked on the IRLP website. Current status " + status);
-                                if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
-                                {
-                                    Email(callsign, status);
+                                    Console.WriteLine("Station " + callsign + " is now being tracked on the IRLP website. Current status " + status);
+                                    if (ConfigurationManager.AppSettings["StatusEmails"] == "Y")
+                                    {
+                                        Email(callsign, status);
+                                    }
                                 }
                             }
                         }
