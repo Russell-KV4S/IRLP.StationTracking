@@ -60,8 +60,9 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                     ServicePointManager.Expect100Continue = true;
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     var irlpHTML = wc.DownloadString(URL);
-
-                    if (irlpHTML.Contains("9050")) //seeing if the html includes the largest reflector. sometimes the data isn't loaded when the html is loaded.
+                    
+                    if (irlpHTML.Contains("9050") &&        //seeing if the html includes the largest reflector. sometimes the data isn't loaded when the html is loaded.
+                        irlpHTML.Contains("<hr><center>"))  //when writing html file out to disk saw bad symbols or blank spaces on some downloads and represents a bad download.
                     {
                         CallsignListString = ConfigurationManager.AppSettings["Callsigns"].ToUpper();
                         foreach (string callsign in _callsignList)
@@ -128,6 +129,14 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                                         log.WriteLine(status);
                                         log.Close();
                                         fs.Close();
+
+                                        //debugging/testing only - adding code to write html to file to try to figure out if malformed html is reporting as a disconnect false positive.
+                                        //FileStream fs1 = null;
+                                        //fs1 = new FileStream("irlpHTML_" + DateTime.Now.ToString("HH_mm_ss") + ".txt", FileMode.Append);
+                                        //StreamWriter html = new StreamWriter(fs1);
+                                        //html.WriteLine(irlpHTML.ToString());
+                                        //html.Close();
+                                        //fs1.Close();
                                     }
                                 }
                             }
@@ -247,7 +256,7 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                 log.Close();
                 fs.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Error logging previous error.");
                 Console.WriteLine("Make sure the Error log is not open.");
