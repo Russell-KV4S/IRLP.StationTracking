@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using Telegram.Bot;
 
 namespace KV4S.AmateurRadio.IRLP.StationTracking
 {
@@ -15,6 +15,13 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
         public static string URL = "http://status.irlp.net/index.php?PSTART=9";
 
         //load from App.config
+
+        //telegram
+        public static TelegramBotClient bot = new TelegramBotClient(ConfigurationManager.AppSettings["BotToken"]);
+        public static string destinationID = ConfigurationManager.AppSettings["DestinationID"];
+        public static int intSleepTime = 2000;
+
+        //email
         public static MailAddress from = new MailAddress(ConfigurationManager.AppSettings["EmailFrom"]);
         public static string toConfig = ConfigurationManager.AppSettings["EmailTo"];
         public static string smtpHost = ConfigurationManager.AppSettings["SMTPHost"];
@@ -27,7 +34,7 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
         {
             set
             {
-                string[] callsignArray = value.Split(',');
+                string[] callsignArray = value.ToUpper().Split(',');
                 _callsignList = new List<string>(callsignArray.Length);
                 _callsignList.AddRange(callsignArray);
             }
@@ -110,6 +117,11 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                                                 {
                                                     Email(callsign, status);
                                                 }
+                                                if (ConfigurationManager.AppSettings["TelegramStatus"] == "Y")
+                                                {
+                                                    bot.SendTextMessageAsync(destinationID, "IRLP.StationTracking - Station " + callsign + " has changed to " + status);
+                                                    Thread.Sleep(intSleepTime);
+                                                }
                                             }
                                             else
                                             {
@@ -155,6 +167,11 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                                     {
                                         Email(callsign, status);
                                     }
+                                    if (ConfigurationManager.AppSettings["TelegramStatus"] == "Y")
+                                    {
+                                        bot.SendTextMessageAsync(destinationID, "IRLP.StationTracking - Station " + callsign + " has changed to " + status);
+                                        Thread.Sleep(intSleepTime);
+                                    }
                                 }
                             }
                         }
@@ -169,6 +186,11 @@ namespace KV4S.AmateurRadio.IRLP.StationTracking
                 if (ConfigurationManager.AppSettings["EmailError"] == "Y")
                 {
                     EmailError(ex.Message, ex.Source);
+                }
+                if (ConfigurationManager.AppSettings["TelegramError"] == "Y")
+                {
+                    bot.SendTextMessageAsync(destinationID, "IRLP.StationTracking Error - Message: " + ex.Message + " Source: " + ex.Source);
+                    Thread.Sleep(intSleepTime);
                 }
             }
             finally
