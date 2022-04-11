@@ -1,5 +1,5 @@
-# Current Version 1.2
-https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/v1.2/IRLP.StationTracking.zip
+# Current Version 1.3
+https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/v1.3/IRLP.StationTracking.zip
 
 # IRLP.StationTracking
 IRLP.StationTracking gives you ability to get email notifications about status changes of your favorite IRLP stations.
