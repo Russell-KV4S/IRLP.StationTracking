@@ -4,7 +4,7 @@ https://github.com/Russell-KV4S/IRLP.StationTracking/releases/download/v1.4/IRLP
 Runs on .Net Framework 4.8 install here: https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48
 
 # IRLP.StationTracking
-IRLP.StationTracking gives you ability to get email or Telegram notifications about status changes of your favorite IRLP stations.
+IRLP.StationTracking gives you ability to get Email and/or Telegram notifications about status changes of your favorite IRLP stations.
 The program reads data from this site: http://status.irlp.net/index.php?PSTART=9
 
 Contact me if you have feature request or use Git and create your enhancements and merge them back in.
