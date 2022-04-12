@@ -45,7 +45,8 @@ There are comments in the file that tells you how to format the entries. Here is
     </appSettings>
 </configuration>
 
+```
+
 For Telegram setup see the wiki article: https://github.com/Russell-KV4S/IRLP.StationTracking/wiki/Telegram-Setup
 
-```
 Errors will be logged to an ErrorLog.txt 
